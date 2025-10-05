@@ -2,13 +2,13 @@
 let aboutMeData = {};
 let projectsData = {};
 
-async function loadData() {
+const loadData = async () => {
   try {
-    // fetch aboutMeData and projectsData files
-    const aboutMeResponse = await fetch("./starter/data/aboutMeData.json");
-    const projectsDataResponse = await fetch(
-      "./starter/data/projectsData.json"
-    );
+    // fetch aboutMeData and projectsData at the same time
+    const [aboutMeResponse, projectsDataResponse] = await Promise.all([
+      fetch("./starter/data/aboutMeData.json"),
+      fetch("./starter/data/projectsData.json"),
+    ]);
 
     // check for successful request
     if (!aboutMeResponse.ok) {
@@ -24,10 +24,16 @@ async function loadData() {
     aboutMeData = await aboutMeResponse.json();
     projectsData = await projectsDataResponse.json();
 
-    console.log("Data loaded successfully:", { aboutMeData, projectsData });
+    console.log("Data loaded successfully");
   } catch (error) {
     console.error("Error fetching data:", error);
   }
-}
+};
 
-loadData();
+// initialize app
+const init = async () => {
+  await loadData();
+  // populateAboutMe();
+};
+
+init(); // starts program
