@@ -53,10 +53,38 @@ const populateAboutMe = () => {
   headshotDiv.appendChild(headshotImg);
 };
 
+// add "projectsData" as project cards and project spotlight
+const populateProjectsData = () => {
+  //project cards
+  const projectList = document.getElementById("projectList");
+  console.log(projectList);
+  const projectsFragment = document.createDocumentFragment();
+  projectsData.forEach((project) => {
+    const card = document.createElement("div");
+    card.className = "projectCard";
+    card.setAttribute("id", `${project.project_id}`);
+    card.style.backgroundImage = `url(${project.card_image})`;
+
+    const title = document.createElement("h4");
+    title.textContent = project.project_name;
+
+    const description = document.createElement("p");
+    description.textContent = project.short_description;
+
+    card.append(title, description);
+    projectsFragment.append(card);
+
+    console.log(card);
+  });
+
+  projectList.append(projectsFragment);
+};
+
 // initialize app
 const init = async () => {
   await loadData();
   populateAboutMe();
+  populateProjectsData();
 };
 
 init(); // starts program
