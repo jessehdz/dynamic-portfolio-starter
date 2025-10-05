@@ -30,10 +30,33 @@ const loadData = async () => {
   }
 };
 
+// add "aboutMe" value as an element
+const populateAboutMe = () => {
+  // deconstructing aboutMeData.json
+  const { aboutMe, headshot } = aboutMeData;
+
+  const aboutMeDiv = document.querySelector("#aboutMe");
+
+  // aboutMeBio
+  const aboutMeBio = document.createElement("p");
+  aboutMeBio.textContent = aboutMe;
+
+  // headshot div and image
+  const headshotDiv = document.createElement("div");
+  headshotDiv.className = "headshotContainer";
+  const headshotImg = document.createElement("img");
+  headshotImg.setAttribute("src", `${headshot}`);
+  headshotImg.setAttribute("alt", "Avatar of African American woman");
+
+  aboutMeDiv.append(aboutMeBio);
+  aboutMeDiv.append(headshotDiv);
+  headshotDiv.appendChild(headshotImg);
+};
+
 // initialize app
 const init = async () => {
   await loadData();
-  // populateAboutMe();
+  populateAboutMe();
 };
 
 init(); // starts program
