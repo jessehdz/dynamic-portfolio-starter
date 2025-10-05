@@ -57,8 +57,8 @@ const populateAboutMe = () => {
 const populateProjectsData = () => {
   //project cards
   const projectList = document.getElementById("projectList");
-  console.log(projectList);
   const projectsFragment = document.createDocumentFragment();
+
   projectsData.forEach((project) => {
     const card = document.createElement("div");
     card.className = "projectCard";
@@ -73,10 +73,9 @@ const populateProjectsData = () => {
 
     card.append(title, description);
     projectsFragment.append(card);
-
-    console.log(card);
   });
 
+  // add cards to div all at once
   projectList.append(projectsFragment);
 };
 
