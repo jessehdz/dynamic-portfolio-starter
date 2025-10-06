@@ -82,7 +82,6 @@ const populateProjectsData = () => {
 
   // project spotlight
   const projectSpotlightDiv = document.getElementById("projectSpotlight");
-
   const projectSpotlightTitlesDiv = document.getElementById("spotlightTitles");
 
   // build spotlight
@@ -99,12 +98,21 @@ const populateProjectsData = () => {
   projectSpotlightDiv.style.backgroundImage = `url(${projectsData[0].spotlight_image})`;
   spotlightTitle.textContent = `${projectsData[0].project_name}`;
   spotlightDesc.textContent = projectsData[0].long_description;
+  spotlightLink.textContent = `Click to view ${projectsData[0].project_name}`;
+  spotlightLink.setAttribute("href", `${projectsData[0].url}`);
 
   // update spotlight - event listener function
   function updateSpotlight(project) {
-    projectSpotlightDiv.style.backgroundImage = `url(${project.spotlight_image})`;
+    projectSpotlightDiv.style.backgroundImage = `url(${
+      project.spotlight_image ||
+      "./starter/images/spotlight_placeholder_bg.webp"
+    })`;
     spotlightTitle.textContent = `${project.project_name}`;
     spotlightDesc.textContent = project.long_description;
+    spotlightLink.textContent = project.url
+      ? `Click to view ${project.project_name}`
+      : "Work in progress...";
+    spotlightLink.setAttribute("href", `${project.url ? project.url : "#"}`);
   }
 
   // add cards to div all at once
