@@ -63,7 +63,9 @@ const populateProjectsData = () => {
     const card = document.createElement("div");
     card.className = "projectCard";
     card.setAttribute("id", `${project.project_id}`);
-    card.style.backgroundImage = `url(${project.card_image})`;
+    card.style.backgroundImage = `url(${
+      project.card_image || "./starter/images/card_placeholder_bg.webp"
+    })`;
 
     const title = document.createElement("h4");
     title.textContent = project.project_name;
@@ -94,7 +96,7 @@ const populateProjectsData = () => {
     spotlightLink
   );
 
-  // first object shown
+  // first object is default spotlight
   projectSpotlightDiv.style.backgroundImage = `url(${projectsData[0].spotlight_image})`;
   spotlightTitle.textContent = `${projectsData[0].project_name}`;
   spotlightDesc.textContent = projectsData[0].long_description;
