@@ -71,12 +71,18 @@ const populateProjectsData = () => {
     const description = document.createElement("p");
     description.textContent = project.short_description;
 
+    // "click" event listener for each card
+    card.addEventListener("click", () => {
+      updateSpotlight(project);
+    });
+
     card.append(title, description);
     projectsFragment.append(card);
   });
 
   // project spotlight
   const projectSpotlightDiv = document.getElementById("projectSpotlight");
+
   const projectSpotlightTitlesDiv = document.getElementById("spotlightTitles");
 
   // build spotlight
@@ -89,9 +95,17 @@ const populateProjectsData = () => {
     spotlightLink
   );
 
+  // first object shown
   projectSpotlightDiv.style.backgroundImage = `url(${projectsData[0].spotlight_image})`;
-  spotlightTitle.textContent = projectsData[0].project_name;
+  spotlightTitle.textContent = `${projectsData[0].project_name}`;
   spotlightDesc.textContent = projectsData[0].long_description;
+
+  // update spotlight - event listener function
+  function updateSpotlight(project) {
+    projectSpotlightDiv.style.backgroundImage = `url(${project.spotlight_image})`;
+    spotlightTitle.textContent = `${project.project_name}`;
+    spotlightDesc.textContent = project.long_description;
+  }
 
   // add cards to div all at once
   projectList.append(projectsFragment);
