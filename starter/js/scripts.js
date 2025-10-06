@@ -55,7 +55,7 @@ const populateAboutMe = () => {
 
 // add "projectsData" as project cards and project spotlight
 const populateProjectsData = () => {
-  //project cards
+  // project cards
   const projectList = document.getElementById("projectList");
   const projectsFragment = document.createDocumentFragment();
 
@@ -74,6 +74,24 @@ const populateProjectsData = () => {
     card.append(title, description);
     projectsFragment.append(card);
   });
+
+  // project spotlight
+  const projectSpotlightDiv = document.getElementById("projectSpotlight");
+  const projectSpotlightTitlesDiv = document.getElementById("spotlightTitles");
+
+  // build spotlight
+  const spotlightTitle = document.createElement("h3");
+  const spotlightDesc = document.createElement("p");
+  const spotlightLink = document.createElement("a");
+  projectSpotlightTitlesDiv.append(
+    spotlightTitle,
+    spotlightDesc,
+    spotlightLink
+  );
+
+  projectSpotlightDiv.style.backgroundImage = `url(${projectsData[0].spotlight_image})`;
+  spotlightTitle.textContent = projectsData[0].project_name;
+  spotlightDesc.textContent = projectsData[0].long_description;
 
   // add cards to div all at once
   projectList.append(projectsFragment);
