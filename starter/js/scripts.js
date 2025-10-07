@@ -121,11 +121,49 @@ const populateProjectsData = () => {
   projectList.append(projectsFragment);
 };
 
+// Project Nav Arrows
+const projectNavigation = () => {
+  console.log(projectList);
+  const leftArrow = document.querySelector(".arrow-left");
+  const rightArrow = document.querySelector(".arrow-right");
+
+  const mediaQuery = window.matchMedia("(width <= 1024px)");
+  console.log(mediaQuery.matches);
+
+  // add scroll-snap css behavior to projects container and div
+  const projectsContainer = document.querySelector("#projectSection");
+  projectsContainer.style.scrollSnapType = "x mandatory";
+  projectsContainer.style.scrollBehavior = "smooth";
+  projectList.style.scrollSnapAlign = "start";
+
+  // event handlers based on width of screen
+  const scrollProjects = (direction) => {
+    if (mediaQuery.matches) {
+      // mobile = scroll horizontally
+      projectList.scrollBy({ left: direction * 200 });
+    } else {
+      // desktop = scroll vertically
+      projectList.scrollBy({ top: direction * 200 });
+    }
+  };
+
+  // event listener for each arrow
+  leftArrow.addEventListener("click", () => {
+    // go backwards
+    scrollProjects(-1);
+  });
+  rightArrow.addEventListener("click", () => {
+    // go forward
+    scrollProjects(1);
+  });
+};
+
 // initialize app
 const init = async () => {
   await loadData();
   populateAboutMe();
   populateProjectsData();
+  projectNavigation();
 };
 
 init(); // starts program
