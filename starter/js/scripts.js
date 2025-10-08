@@ -59,6 +59,7 @@ const populateProjectsData = () => {
   const projectList = document.getElementById("projectList");
   const projectsFragment = document.createDocumentFragment();
 
+  // creating each project card
   projectsData.forEach((project) => {
     const card = document.createElement("div");
     card.className = "projectCard";
@@ -123,12 +124,10 @@ const populateProjectsData = () => {
 
 // Project Nav Arrows
 const projectNavigation = () => {
-  console.log(projectList);
   const leftArrow = document.querySelector(".arrow-left");
   const rightArrow = document.querySelector(".arrow-right");
 
   const mediaQuery = window.matchMedia("(width <= 1024px)");
-  console.log(mediaQuery.matches);
 
   // add scroll-snap css behavior to projects container and div
   const projectsContainer = document.querySelector("#projectSection");
@@ -158,12 +157,37 @@ const projectNavigation = () => {
   });
 };
 
+// Contact Me form validation
+const contactMeValidation = () => {
+  // email input --------------
+  const emailField = document.getElementById("contactEmail");
+  // email validation
+  emailField.setAttribute("type", "email");
+  // email required
+  emailField.required = true;
+  console.log(emailField.value);
+
+  // text area --------------
+  const textArea = document.getElementById("contactMessage");
+  // text area required
+  textArea.required = true;
+  // text area maxLength 300
+  textArea.setAttribute("maxLength", "300");
+  // text area characters left
+  const charactersLeft = document.getElementById("charactersLeft");
+
+  textArea.addEventListener("input", () => {
+    charactersLeft.textContent = `Characters: ${textArea.value.length}/300`;
+  });
+};
+
 // initialize app
 const init = async () => {
   await loadData();
   populateAboutMe();
   populateProjectsData();
   projectNavigation();
+  contactMeValidation();
 };
 
 init(); // starts program
