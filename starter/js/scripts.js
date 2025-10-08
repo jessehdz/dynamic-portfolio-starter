@@ -159,25 +159,62 @@ const projectNavigation = () => {
 
 // Contact Me form validation
 const contactMeValidation = () => {
-  // email input --------------
+  const contactForm = document.getElementById("formSection");
   const emailField = document.getElementById("contactEmail");
-  // email validation
-  emailField.setAttribute("type", "email");
-  // email required
-  emailField.required = true;
-  console.log(emailField.value);
-
-  // text area --------------
-  const textArea = document.getElementById("contactMessage");
-  // text area required
-  textArea.required = true;
-  // text area maxLength 300
-  textArea.setAttribute("maxLength", "300");
-  // text area characters left
+  const emailError = document.getElementById("emailError");
+  const messageField = document.getElementById("contactMessage");
+  const messageError = document.getElementById("messageError");
   const charactersLeft = document.getElementById("charactersLeft");
 
-  textArea.addEventListener("input", () => {
-    charactersLeft.textContent = `Characters: ${textArea.value.length}/300`;
+  // email element --------------
+  emailField.setAttribute("type", "email");
+  emailField.required = true;
+
+  // message element --------------
+  messageField.setAttribute("maxLength", "300");
+  messageField.required = true;
+
+  // live character counter -- message
+  messageField.addEventListener("input", () => {
+    charactersLeft.textContent = `Characters: ${messageField.value.length}/300`;
+  });
+
+  // form validation
+  contactForm.addEventListener("submit", (e) => {
+    // stop form from submitting immediately
+    e.preventDefault();
+
+    try {
+      // email & message input value check
+      const email = emailField.value.trim();
+      const message = messageField.value.trim();
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      // email validation
+      if (!email) {
+        emailError.textContent = `Email is required.`;
+        throw new Error(`Email missing`);
+      } else if (!emailRegex.test(email)) {
+        emailError.textContent = `Email has invalid characters. Please check for errors.`;
+        throw new Error(`Email has invalid characters`);
+      }
+
+      // message validation
+      if (!message) {
+        messageError.textContent = "Message is required.";
+        throw new Error("Message missing");
+      } else if (messageField.value.length > 300) {
+        messageError.textContent = "Message must be under 300 characters.";
+        throw new Error("Message too long");
+      }
+
+      // if all checks pass:
+      console.log("Form submitted successfully!");
+      // clear form fields
+      contactForm.reset();
+    } catch (error) {
+      console.warn("Validation stopped:", error.message);
+    }
   });
 };
 
@@ -190,4 +227,5 @@ const init = async () => {
   contactMeValidation();
 };
 
-init(); // starts program
+// starts program
+init();
